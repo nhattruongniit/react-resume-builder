@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+* {
+  font-family: "Outfit", sans-serif;
+}
+
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}

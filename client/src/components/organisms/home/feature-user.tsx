@@ -1,14 +1,14 @@
 import React from "react";
-import InfoBadge from "../atoms/badge/info-badge";
-import Title from "../molecules/title";
+import InfoBadge from "../../atoms/badge/info-badge";
+import Title from "../../molecules/title";
 
 export const FeatureUser = () => {
     const [isHover, setIsHover] = React.useState(false);
 
     return (
       <div id="features" className="flex flex-col items-center scroll-mt-12">
-
         <InfoBadge />
+        
         <Title 
           title="Build your resume" 
           description="Our streamlined process helps you create a professional resume in minutes with intelligent AI-powered tools and features." 

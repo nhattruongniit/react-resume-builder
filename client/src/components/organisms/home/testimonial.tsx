@@ -1,6 +1,6 @@
 import { BookUserIcon } from "lucide-react"
-import InfoBadge from "../atoms/badge/info-badge"
-import Title from "../molecules/title"
+import Title from "../../molecules/title";
+import InfoBadge from "../../atoms/badge/info-badge";
 
 function Testimonial() {
   const cardsData = [

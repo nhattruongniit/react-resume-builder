@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import { PATH } from "../../configs/path";
+import { PATH } from "../../../configs/path";
 
 export const HeroUser = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -18,8 +18,8 @@ const logos = [
       <div className="pb-20 font-poppins">
           {/* Navbar */}
           <nav className="z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
-            <a href="https://prebuiltui.com">
-              <img src="assets/images/logo.svg" alt="PrebuiltUI Logo" className="h-11 w-auto" />
+            <a href="#">
+              <img src="/assets/images/logo.svg" alt="PrebuiltUI Logo" className="h-11 w-auto" />
             </a>
 
             <div className="hidden md:flex items-center gap-8 transition duration-500 text-slate-800">

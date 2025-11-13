@@ -1,7 +1,8 @@
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
+import type { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react";
 
-const ClassicTemplate = ({ data, accentColor }) => {
-    const formatDate = (dateStr) => {
+export const ClassicTemplate = ({ data, accentColor }: any) => {
+    const formatDate = (dateStr: any) => {
         if (!dateStr) return "";
         const [year, month] = dateStr.split("-");
         return new Date(year, month - 1).toLocaleDateString("en-US", {
@@ -70,7 +71,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     </h2>
 
                     <div className="space-y-4">
-                        {data.experience.map((exp, index) => (
+                        {data.experience.map((exp: { position: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; company: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; start_date: any; is_current: any; end_date: any; description: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, index: Key | null | undefined) => (
                             <div key={index} className="border-l-3 pl-4" style={{ borderColor: accentColor }}>
                                 <div className="flex justify-between items-start mb-2">
                                     <div>
@@ -100,7 +101,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     </h2>
 
                     <ul className="space-y-3 ">
-                        {data.project.map((proj, index) => (
+                        {data.project.map((proj: { name: string; description: string }, index: Key | null | undefined) => (
                             <div key={index} className="flex justify-between items-start border-l-3 border-gray-300 pl-6">
                                 <div>
                                     <li className="font-semibold text-gray-800 ">{proj.name}</li>
@@ -120,7 +121,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     </h2>
 
                     <div className="space-y-3">
-                        {data.education.map((edu, index) => (
+                        {data.education.map((edu: { degree: string; field: string; institution: string; graduation_date: any; gpa: string | number | null | undefined }, index: Key | null | undefined) => (
                             <div key={index} className="flex justify-between items-start">
                                 <div>
                                     <h3 className="font-semibold text-gray-900">
@@ -146,7 +147,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     </h2>
 
                     <div className="flex gap-4 flex-wrap">
-                        {data.skills.map((skill, index) => (
+                        {data.skills.map((skill: string, index: Key | null | undefined) => (
                             <div key={index} className="text-gray-700">
                                 • {skill}
                             </div>
@@ -157,5 +158,3 @@ const ClassicTemplate = ({ data, accentColor }) => {
         </div>
     );
 }
-
-export default ClassicTemplate;

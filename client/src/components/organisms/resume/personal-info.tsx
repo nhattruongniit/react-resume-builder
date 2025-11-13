@@ -32,8 +32,6 @@ function PersonalInfo({ data, onChange, removeBackground, toggleRemoveBackground
     onChange({... data, [field]: value });
   }
 
-  console.log('data: ', data)
-
   return (
     <div>
       <h3 className='text-lg font-semibold text-gray900'>Personal Information</h3>

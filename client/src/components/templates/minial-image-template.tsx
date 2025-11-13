@@ -1,7 +1,8 @@
 import { Mail, Phone, MapPin } from "lucide-react";
+import type { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react";
 
-const MinimalImageTemplate = ({ data, accentColor }) => {
-    const formatDate = (dateStr) => {
+export const MinimalImageTemplate = ({ data, accentColor }: any) => {
+    const formatDate = (dateStr: any) => {
         if (!dateStr) return "";
         const [year, month] = dateStr.split("-");
         return new Date(year, month - 1).toLocaleDateString("en-US", {
@@ -77,7 +78,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                 EDUCATION
                             </h2>
                             <div className="space-y-4 text-sm">
-                                {data.education.map((edu, index) => (
+                                {data.education.map((edu: { degree: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; institution: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; graduation_date: any; }, index: Key | null | undefined) => (
                                     <div key={index}>
                                         <p className="font-semibold uppercase">{edu.degree}</p>
                                         <p className="text-zinc-600">{edu.institution}</p>
@@ -97,7 +98,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                 SKILLS
                             </h2>
                             <ul className="space-y-1 text-sm">
-                                {data.skills.map((skill, index) => (
+                                {data.skills.map((skill: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, index: Key | null | undefined) => (
                                     <li key={index}>{skill}</li>
                                 ))}
                             </ul>
@@ -127,7 +128,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                 EXPERIENCE
                             </h2>
                             <div className="space-y-6 mb-8">
-                                {data.experience.map((exp, index) => (
+                                {data.experience.map((exp: { position: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; start_date: any; is_current: any; end_date: any; company: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; description: string; }, index: Key | null | undefined) => (
                                     <div key={index}>
                                         <div className="flex justify-between items-center">
                                             <h3 className="font-semibold text-zinc-900">
@@ -161,7 +162,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                 PROJECTS
                             </h2>
                             <div className="space-y-4">
-                                {data.project.map((project, index) => (
+                                {data.project.map((project: { name: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; type: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; description: string; }, index: Key | null | undefined) => (
                                     <div key={index}>
                                         <h3 className="text-md font-medium text-zinc-800 mt-3">{project.name}</h3>
                                         <p className="text-sm mb-1" style={{ color: accentColor }} >
@@ -184,6 +185,3 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
         </div>
     );
 }
-
-
-export default MinimalImageTemplate;

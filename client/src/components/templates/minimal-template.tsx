@@ -1,6 +1,7 @@
+import type { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react";
 
-const MinimalTemplate = ({ data, accentColor }) => {
-    const formatDate = (dateStr) => {
+export const MinimalTemplate = ({ data, accentColor }: any) => {
+    const formatDate = (dateStr: any) => {
         if (!dateStr) return "";
         const [year, month] = dateStr.split("-");
         return new Date(year, month - 1).toLocaleDateString("en-US", {
@@ -47,7 +48,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     </h2>
 
                     <div className="space-y-6">
-                        {data.experience.map((exp, index) => (
+                        {data.experience.map((exp: { position: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; start_date: any; is_current: any; end_date: any; company: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; description: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, index: Key | null | undefined) => (
                             <div key={index}>
                                 <div className="flex justify-between items-baseline mb-1">
                                     <h3 className="text-lg font-medium">{exp.position}</h3>
@@ -75,7 +76,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     </h2>
 
                     <div className="space-y-4">
-                        {data.project.map((proj, index) => (
+                        {data.project.map((proj: { name: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; description: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, index: Key | null | undefined) => (
                             <div key={index} className="flex flex-col gap-2 justify-between items-baseline">
                                 <h3 className="text-lg font-medium ">{proj.name}</h3>
                                 <p className="text-gray-600">{proj.description}</p>
@@ -93,7 +94,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     </h2>
 
                     <div className="space-y-4">
-                        {data.education.map((edu, index) => (
+                        {data.education.map((edu: { degree: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; field: any; institution: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; gpa: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; graduation_date: any; }, index: Key | null | undefined) => (
                             <div key={index} className="flex justify-between items-baseline">
                                 <div>
                                     <h3 className="font-medium">
@@ -126,5 +127,3 @@ const MinimalTemplate = ({ data, accentColor }) => {
         </div>
     );
 }
-
-export default MinimalTemplate;

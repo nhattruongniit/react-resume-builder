@@ -1,7 +1,8 @@
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
+import type { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react";
 
-const ModernTemplate = ({ data, accentColor }) => {
-	const formatDate = (dateStr) => {
+export const ModernTemplate = ({ data, accentColor }: any) => {
+	const formatDate = (dateStr: any) => {
 		if (!dateStr) return "";
 		const [year, month] = dateStr.split("-");
 		return new Date(year, month - 1).toLocaleDateString("en-US", {
@@ -71,7 +72,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 						</h2>
 
 						<div className="space-y-6">
-							{data.experience.map((exp, index) => (
+							{data.experience.map((exp: { position: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; company: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; start_date: any; is_current: any; end_date: any; description: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, index: Key | null | undefined) => (
 								<div key={index} className="relative pl-6 border-l border-gray-200">
 
 									<div className="flex justify-between items-start mb-2">
@@ -102,7 +103,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 						</h2>
 
 						<div className="space-y-6">
-							{data.project.map((p, index) => (
+							{data.project.map((p: { name: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; description: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, index: Key | null | undefined) => (
 								<div key={index} className="relative pl-6 border-l border-gray-200" style={{borderLeftColor: accentColor}}>
 
 
@@ -131,7 +132,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 							</h2>
 
 							<div className="space-y-4">
-								{data.education.map((edu, index) => (
+								{data.education.map((edu: { degree: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; field: any; institution: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; graduation_date: any; gpa: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }, index: Key | null | undefined) => (
 									<div key={index}>
 										<h3 className="font-semibold text-gray-900">
 											{edu.degree} {edu.field && `in ${edu.field}`}
@@ -155,7 +156,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 							</h2>
 
 							<div className="flex flex-wrap gap-2">
-								{data.skills.map((skill, index) => (
+								{data.skills.map((skill: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, index: Key | null | undefined) => (
 									<span
 										key={index}
 										className="px-3 py-1 text-sm text-white rounded-full"
@@ -172,5 +173,3 @@ const ModernTemplate = ({ data, accentColor }) => {
 		</div>
 	);
 }
-
-export default ModernTemplate;

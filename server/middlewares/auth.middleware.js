@@ -9,8 +9,6 @@ export default function protect(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = decoded.id;
-
-    console.log('req.userId: ', req.userId)
     next();
   } catch (error) {
     console.log('error: ', error)

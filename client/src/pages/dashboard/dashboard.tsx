@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import { FilePenLineIcon, PencilIcon, PlusIcon, TrashIcon, UploadCloud, UploadCloudIcon, XIcon } from "lucide-react";
 import { useNavigate } from "react-router";
 
@@ -8,9 +8,11 @@ import { COLORS } from "../../configs/colors";
 import { PATH } from "../../configs/path";
 import type { RootState } from "../../store";
 import { useSelector } from "react-redux";
+import api from "../../services/api";
+import toast from "react-hot-toast";
 
 function Dashboard() {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user, token } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const [allResumes, setAllResumes] = React.useState<IResume[]>([]);
   const [showCreateResume, setShowCreateResume] = React.useState<boolean>(false);
@@ -35,10 +37,22 @@ function Dashboard() {
     setTitle('');
   }
 
-  function submitCreateResume(e: React.FormEvent<HTMLFormElement>) {
+  async function submitCreateResume(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    toggleCreateResume();
-    navigate(PATH.BUILDER + '/' + 'res123');
+    // toggleCreateResume();
+    // navigate(PATH.BUILDER + '/' + 'res123');
+    try {
+      const { data } = await api.post('/api/resumes/create', { title }, {
+        headers: {
+          Authorization: token
+        }
+      });
+      setAllResumes(prevResumes => [...prevResumes, data.resume]);
+      setShowCreateResume(false);
+      navigate(PATH.BUILDER + '/' + data.resume._id);
+    } catch (error) {
+      toast.error('Failed to create resume. Please try again.');
+    }
   }
 
   function toggleUploadResume() {

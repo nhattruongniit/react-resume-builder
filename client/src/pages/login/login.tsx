@@ -1,7 +1,14 @@
 import { Mail, User2Icon, Lock } from "lucide-react"
 import React from "react"
-
+import api from "../../services/api";
+import { useDispatch } from "react-redux";
+import { login } from "../../slices/auth.slice";
+import toast from "react-hot-toast";
+import { Link } from "react-router";
+import { PATH } from "../../configs/path";
+ 
 const Login = () => {
+  const dispatch = useDispatch();
   const query = new URLSearchParams(window.location.search);
   const urlState = query.get("state");
   const [state, setState] = React.useState(urlState || "login")
@@ -13,6 +20,14 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    try {
+      const { data } = await api.post(`/api/users/${state}`, formData);
+      dispatch(login(data));
+      window.localStorage.setItem("token", data.token);
+      toast.success(data.message);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || error.message);
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +38,12 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <form onSubmit={handleSubmit} className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white">
+        <div className="flex justify-center pt-5">
+          <Link to={PATH.HOME} className="cursor-pointer">
+            <img alt="PrebuiltUI Logo" className="h-11 w-auto" src="/assets/images/favicon.ico" />
+          </Link>
+        </div>
+       
         <h1 className="text-gray-900 text-3xl mt-10 font-medium">{state === "login" ? "Login" : "Sign up"}</h1>
         <p className="text-gray-500 text-sm mt-2">Please {state} to continue</p>
         {state !== "login" && (

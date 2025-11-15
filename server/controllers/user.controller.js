@@ -1,4 +1,7 @@
 import Resume from "../models/Resume.js";
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
@@ -52,7 +55,7 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid email and password" });
     }
 
-    const isPasswordValid = await existingUser.comparePassword(password);
+    const isPasswordValid = await bcrypt.compare(password, existingUser.password);
     if(!isPasswordValid) {
       return res.status(400).json({ message: "Invalid email and password" });
     }
@@ -72,8 +75,7 @@ export const loginUser = async (req, res) => {
 // GET: /api/users/data -> get user by id
 export const getUserById = async (req, res) => {
   try {
-    const userId = req.usserId;
-
+    const userId = req.userId;
     const existingUser = await User.findById(userId);
     if(!existingUser) {
       return res.status(404).json({ message: "User not found" });

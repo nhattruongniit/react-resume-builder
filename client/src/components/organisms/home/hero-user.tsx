@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router";
 import { PATH } from "../../../configs/path";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store";
 
 export const HeroUser = () => {
+  const { user } = useSelector((state: RootState) => state.auth);
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-const logos = [
+  const logos = [
     'https://saasly.prebuiltui.com/assets/companies-logo/instagram.svg',
     'https://saasly.prebuiltui.com/assets/companies-logo/framer.svg',
     'https://saasly.prebuiltui.com/assets/companies-logo/microsoft.svg',
@@ -30,11 +33,14 @@ const logos = [
             </div>
 
             <div className="flex gap-2">
-              <Link to={PATH.GET_STARTED} className="hidden md:block px-6 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white">
+              <Link to={PATH.GET_STARTED} hidden={user} className="hidden md:block px-6 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white">
                 Get started
               </Link>
-              <Link to={PATH.GET_LOGIN} className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900" >
+              <Link to={PATH.GET_LOGIN} hidden={user}  className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900" >
                 Login
+              </Link>
+              <Link to={PATH.APP} hidden={!user} className="hidden md:block px-6 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white" >
+                Dashboard
               </Link>
             </div>
 

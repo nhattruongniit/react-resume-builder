@@ -10,6 +10,7 @@ This is a full-stack web application that allows users to create, customize, and
 - Vite
 - Tailwind CSS
 - Lucide React Icons
+- Redux Toolkit
 
 ### Backend
 - Node.js

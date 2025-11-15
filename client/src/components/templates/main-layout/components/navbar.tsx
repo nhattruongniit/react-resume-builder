@@ -21,7 +21,7 @@ function Navbar() {
           <img src="/assets/images/logo.svg" alt="Resume" className="h-11 w-auto" />
         </Link>
         <div className='flex items-center gap-4 text-sm'>
-          <p className='max-sm:hidden capitalize'>Hi, {user?.name}</p>
+          <p className='max-sm:hidden capitalize'>Hi, {user?.name || 'Tony'}</p>
           <button 
             className="bg-white hover:bg-slate-50 border border-gray-300 px-7 py-1.5 rounded-full active:scale-95 transition-all"
             onClick={logoutUser} 

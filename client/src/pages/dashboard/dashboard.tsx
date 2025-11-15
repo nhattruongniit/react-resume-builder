@@ -39,20 +39,20 @@ function Dashboard() {
 
   async function submitCreateResume(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // toggleCreateResume();
-    // navigate(PATH.BUILDER + '/' + 'res123');
-    try {
-      const { data } = await api.post('/api/resumes/create', { title }, {
-        headers: {
-          Authorization: token
-        }
-      });
-      setAllResumes(prevResumes => [...prevResumes, data.resume]);
-      setShowCreateResume(false);
-      navigate(PATH.BUILDER + '/' + data.resume._id);
-    } catch (error) {
-      toast.error('Failed to create resume. Please try again.');
-    }
+    toggleCreateResume();
+    navigate(PATH.BUILDER + '/' + 'res123');
+    // try {
+    //   const { data } = await api.post('/api/resumes/create', { title }, {
+    //     headers: {
+    //       Authorization: token
+    //     }
+    //   });
+    //   setAllResumes(prevResumes => [...prevResumes, data.resume]);
+    //   toggleCreateResume(false);
+    //   navigate(PATH.BUILDER + '/' + data.resume._id);
+    // } catch (error) {
+    //   toast.error('Failed to create resume. Please try again.');
+    // }
   }
 
   function toggleUploadResume() {
@@ -84,7 +84,7 @@ function Dashboard() {
   return (
     <div>
       <div className='max-w-7xl mx-auto px-4 py-8'>
-        <p className="text-2xl-font-meidum mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">Welcome, {user?.name}</p>
+        <p className="text-2xl-font-meidum mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">Welcome, {user?.name || 'Tony'}</p>
 
         <div className="flex gap-4">
           <button 

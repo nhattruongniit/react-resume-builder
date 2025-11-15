@@ -36,7 +36,7 @@ export const HeroUser = () => {
               <Link to={PATH.GET_STARTED} hidden={user} className="hidden md:block px-6 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white">
                 Get started
               </Link>
-              <Link to={PATH.GET_LOGIN} hidden={user}  className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900" >
+              <Link to={PATH.LOGIN} hidden={user}  className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900" >
                 Login
               </Link>
               <Link to={PATH.APP} hidden={!user} className="hidden md:block px-6 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white" >

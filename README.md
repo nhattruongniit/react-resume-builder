@@ -19,6 +19,11 @@ This is a full-stack web application that allows users to create, customize, and
 - Mongoose
 - Multer
 - ImageKit SDK
+
+### Deployment
+- Vercel (Frontend)
+- Vercel (Backend): https://react-resume-builder-mc26.vercel.app/
+
 ### AI Integration
 - Google AI Gemini API for generating resume content based on user input.
 - Docs: https://ai.google.dev/gemini-api/docs/openai#javascript

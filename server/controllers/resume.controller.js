@@ -2,6 +2,22 @@ import fs from "fs";
 import imageKit from "../configs/imageKit.js";
 import Resume from "../models/Resume.js";
 
+// GET: /api/resumes -> get all resumes
+export const getResumes = async (req, res) => {
+  try {
+    // const resumes = await Resume
+    // how to fill all 
+    const resumes = await Resume.find();
+    res.status(200).json({
+      message: "Resumes retrieved successfully",
+      resumes
+    });
+  }
+  catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
 // POST: /api/resumes/create -> create a new resume
 export const createResume = async (req, res) => {
   try {
@@ -40,7 +56,7 @@ export const deleteResume = async (req, res) => {
     });
   }
   catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: 'Failed to delete resume. Please try again.' });
   }
 }
 
@@ -49,7 +65,7 @@ export const getResumeById = async (req, res) => {
   try {
     const userId = req.userId;
     const { resumeId } = req.params;
-    
+
     const resume = await Resume.findOne({ _id: resumeId, userId });
 
     if(!resume) {
@@ -96,9 +112,14 @@ export const updateResume = async (req, res) => {
       resumeData,
       removeBackground
     } = req.body;
-
     const image = req.file;
-    let resumeDataCopy = JSON.parse(resumeData);
+
+    let resumeDataCopy = '';
+    if(typeof resumeData === 'string') {
+      resumeDataCopy = JSON.parse(resumeData);
+    } else {
+      resumeDataCopy = structuredClone(resumeData);
+    }
 
     if(image) {
       const imageBufferData = fs.createReadStream(image.path);

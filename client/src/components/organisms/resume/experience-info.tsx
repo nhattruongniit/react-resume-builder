@@ -1,4 +1,4 @@
-import { Briefcase, Loader2, Plus, Sparkle, Sparkles, Trash2 } from 'lucide-react'
+import { Briefcase, Loader2, Plus, Sparkles, Trash2 } from 'lucide-react'
 import type { IExperience } from '../../../types/types';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../store';

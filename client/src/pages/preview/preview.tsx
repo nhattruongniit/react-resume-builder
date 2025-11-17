@@ -1,20 +1,29 @@
 import React from "react";
 import { useParams } from "react-router"
 
-import { dummyResumeData } from "../../mocks/resume-data";
+// import { dummyResumeData } from "../../mocks/resume-data";
 import type { IResume } from "../../types/types";
 import ResumePreview from "../../components/organisms/resume/resume-preview";
 import Loader from "../../components/atoms/loader";
 import { ArrowLeftIcon } from "lucide-react";
+import toast from "react-hot-toast";
+import api from "../../services/api";
 
 function Preview() {
   const [isLoading, setIsLoading] = React.useState(true);
   const { resumeId } = useParams<{ resumeId: string }>();
   const [resumeData, setResumeData] = React.useState<IResume | null>(null);
 
-  function loadResume() {
-    setResumeData(dummyResumeData.find(r => r._id === resumeId) || null);
-    setIsLoading(false);
+  async function loadResume() {
+    // setResumeData(dummyResumeData.find(r => r._id === resumeId) || null);
+    try {
+      const { data } = await api.get(`/api/resumes/public/${resumeId}`);
+      setResumeData(data.resume);
+    } catch (error) {
+      toast.error("Failed to load resume. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   }
     
   React.useEffect(() => {

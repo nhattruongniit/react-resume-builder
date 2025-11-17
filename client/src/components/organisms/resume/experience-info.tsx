@@ -1,5 +1,10 @@
-import { Briefcase, Plus, Sparkle, Trash2 } from 'lucide-react'
+import { Briefcase, Loader2, Plus, Sparkle, Sparkles, Trash2 } from 'lucide-react'
 import type { IExperience } from '../../../types/types';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../../store';
+import React from 'react';
+import api from '../../../services/api';
+import toast from 'react-hot-toast';
 
 interface ExperienceInfoProps {
   data: IExperience[];
@@ -7,6 +12,8 @@ interface ExperienceInfoProps {
 }
 
 function ExperienceInfo({ data, onChange }: ExperienceInfoProps) {
+  const { token } = useSelector((state: RootState) => state.auth);
+  const [generatingIndex, setGeneratingIndex] = React.useState(-1);
 
   function addExperience() {
     const newExperience = {
@@ -16,7 +23,6 @@ function ExperienceInfo({ data, onChange }: ExperienceInfoProps) {
       end_date: '',
       description: '',
       is_current: false,
-      _id: Math.random().toString(36).substr(2, 9)
     }
     onChange([...data, newExperience]);
   }
@@ -29,7 +35,32 @@ function ExperienceInfo({ data, onChange }: ExperienceInfoProps) {
   function updateExperience({index, field, value}: { index: number, field: keyof IExperience, value: string | boolean}) {
    const updated = [...data];
    updated[index] = {...updated[index], [field]: value};
+   console.log('updateExperience: ', updated)
    onChange(updated);
+  }
+
+  async function generateDescription({ index }: { index: number }) {
+    try {
+      setGeneratingIndex(index);
+      const experience = data[index];
+      const prompt = `enhance this job description ${experience.description} for the position of ${experience.position} at ${experience.company}. Make it more professional and impactful.`;
+      const response = await api.post('/api/ai/enhance-job-desscription', {
+        userContent: prompt
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      updateExperience({
+        index,
+        field: 'description',
+        value: response?.data?.enhancedContent || ''
+      })
+    } catch (error) {
+      toast.error("Failed to generate job description. Please try again.");
+    } finally {
+      setGeneratingIndex(-1);
+    }
   }
 
   return (
@@ -141,9 +172,19 @@ function ExperienceInfo({ data, onChange }: ExperienceInfoProps) {
               <div className='space-y-2'>
                 <div className="flex items-center justify-between">
                   <label className='text-sm font-medium text-gray-700'>Job Description</label>
-                  <button className='flex items-center gap-1 px-3 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disable:opacity-50'>
-                    <Sparkle className='w-3 h-3' />
-                    Enhance with AI
+                  <button 
+                    className='flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50'
+                    onClick={() => {
+                      generateDescription({ index })
+                    }}
+                    disabled={generatingIndex === index}
+                  >
+                    {generatingIndex === index ? (
+                      <Loader2 className='size-4 animate-spin' />
+                    ) : (
+                      <Sparkles  className='size-4'/>
+                    )}
+                    {generatingIndex === index ? 'Generating...' : 'Enhance with AI'}
                   </button>
                 </div>
                 <textarea 

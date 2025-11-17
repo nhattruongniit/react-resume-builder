@@ -1,4 +1,9 @@
-import { Sparkles } from 'lucide-react'
+import React from 'react';
+import { Loader2, Sparkles } from 'lucide-react'
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../../store';
+import toast from 'react-hot-toast';
+import api from '../../../services/api';
 
 interface ProfessionalSummaryProps {
   data: string;
@@ -6,6 +11,29 @@ interface ProfessionalSummaryProps {
 }
 
 function ProfessionalSummary({ data, onChange }: ProfessionalSummaryProps) {
+  const { token } = useSelector((state: RootState) => state.auth);
+  const [isGenerating, setIsGenerating] = React.useState(false);
+
+  async function generateSummary() {
+    try {
+      setIsGenerating(true);
+      const prompt = `enhance my professional summary "${data}"`;
+      const response = await api.post('/api/ai/enhance-pro-sum', {
+        userContent: prompt
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      onChange(response?.data?.enhancedContent || '');
+      toast.success("Professional summary generated successfully!");
+    } catch (error) {
+      toast.error("Failed to generate summary. Please try again.");
+    } finally {
+      setIsGenerating(false);
+    }
+  }
+
   return (
     <div className='space-y-4'>
       <div className='flex justify-between items-center'>
@@ -13,9 +41,17 @@ function ProfessionalSummary({ data, onChange }: ProfessionalSummaryProps) {
           <h3 className='flex items-center gap-2 text-lg font-semibold text-gray-900'>Professional Summary</h3>
           <p className='text-sm text-gray-500'>Add summary for your resume here</p>
         </div>
-        <button className='flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50'>
-          <Sparkles  className='size-4'/>
-          AI Enhance
+        <button 
+          className='flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50'
+          onClick={generateSummary}
+          disabled={isGenerating}
+        >
+          {isGenerating ? (
+            <Loader2 className='size-4 animate-spin' />
+          ) : (
+            <Sparkles  className='size-4'/>
+          )}
+          {isGenerating ? 'Generating...' : 'AI Enhance'}
         </button>
       </div>
 

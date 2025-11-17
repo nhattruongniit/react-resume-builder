@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useParams } from 'react-router';
-import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, DownloadIcon, EyeIcon, EyeOffIcon, FileText, FolderIcon, GraduationCap, Share2Icon, Sparkles, User } from 'lucide-react';
+import { ArrowLeftIcon, Briefcase, ChevronLeft, ChevronRight, DownloadIcon, EyeIcon, EyeOffIcon, FileText, FolderIcon, GraduationCap, LoaderCircleIcon, Share2Icon, Sparkles, User } from 'lucide-react';
+import toast from "react-hot-toast";
 
 import type { IPersonalInfo, IResume } from '../../types/types';
 import { dummyResumeData } from '../../mocks/resume-data';
@@ -14,6 +15,9 @@ import ExperienceInfo from '../../components/organisms/resume/experience-info';
 import EducationInfo from '../../components/organisms/resume/education-info';
 import ProjectInfo from '../../components/organisms/resume/project-info';
 import SkillInfo from '../../components/organisms/resume/skill-info';
+import api from '../../services/api';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../store';
 
 const sections = [
   { id: 'personal', name: 'Personal Info', icon: User },
@@ -43,6 +47,8 @@ function ResumeBuilder() {
   });
   const [activeSectionIndex, setActiveSectionIndex] = React.useState(0);
   const [removeBackground, setRemoveBackground] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { token } = useSelector((state: RootState) => state.auth);
 
   const activeSection = sections[activeSectionIndex];
 
@@ -50,8 +56,22 @@ function ResumeBuilder() {
     loadExistingResume();
   }, []);
 
-  function loadExistingResume() {
-    const resume = dummyResumeData.find(r => r._id === resumeId);
+  async function loadExistingResume() {
+    let resume = dummyResumeData.find(r => r._id === resumeId);
+
+    if(!resume) {
+      // try to get resume from server
+      try {
+        const data = await api.get(`/api/resumes/get/${resumeId}`, {
+          headers: {
+            Authorization: token
+          }
+        });
+        resume = data?.data?.resume;
+      } catch (error) {
+        toast.error('Failed to load resume. Please try again.');
+      }
+    }
     if (resume) {
       setResumeData(resume);
       document.title = resume.title;
@@ -62,8 +82,27 @@ function ResumeBuilder() {
     setRemoveBackground(prevState => !prevState);
   }
 
-  function changeResumeVisibility() {
-    setResumeData(prevState => ({...prevState, public: !prevState.public }));
+  async function changeResumeVisibility() {
+    // setResumeData(prevState => ({...prevState, public: !prevState.public }));
+    if(!resumeId) return;
+
+    const newVisibility = !resumeData.public;
+    resumeData.public = newVisibility;
+    try {
+      const formData = new FormData();
+      formData.append("resumeId", resumeId);
+      formData.append("resumeData", JSON.stringify(resumeData));
+      await api.put(`/api/resumes/update`, formData, {
+        headers: {
+          Authorization: token,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setResumeData(prevState => ({...prevState, public: newVisibility }));
+      toast.success(`Resume is now ${newVisibility ? 'Public' : 'Private'}`);
+    } catch (error) {
+     toast.error('Failed to change resume visibility. Please try again.'); 
+    }
   }
 
   function handleShare() {
@@ -85,6 +124,36 @@ function ResumeBuilder() {
 
   function downloadResume() {
     window.print();
+  }
+
+  async function saveResume() {
+    if(!resumeId) return;
+    console.log('saveResume: ', resumeData);
+    try {
+      const updatedResumeData = structuredClone(resumeData);
+
+      if(typeof updatedResumeData.personal_info?.image === 'object') {
+        delete updatedResumeData.personal_info.image;
+      }
+      const formData = new FormData();
+      formData.append("resumeId", resumeId);
+      formData.append("resumeData", JSON.stringify(updatedResumeData));
+      removeBackground && formData.append("removeBackground", "yes");
+      typeof resumeData.personal_info?.image === 'object' && formData.append("image", resumeData.personal_info.image);
+      
+      setIsLoading(true);
+      const { data } = await api.put(`/api/resumes/update`, formData, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setResumeData(data.resume);
+      toast.success('Resume saved successfully!');
+    } catch (error) {
+      toast.error('Failed to save resume. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -186,8 +255,14 @@ function ResumeBuilder() {
               </div>
 
               <div className="text-right">
-                <button className='bg-gradient-to-br from-blue-100 to-blue-200 ring-blue-300 text-blue-600 ring hover:ring-blue-400 transition-all rounded-md px-6 py-2 mt-6 text-sm'>
-                  Save Changes
+                <button 
+                  className={`bg-gradient-to-br from-blue-100 to-blue-200 ring-blue-300 text-blue-600 ring hover:ring-blue-400 transition-all rounded-md px-6 py-2 mt-6 text-sm ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  onClick={saveResume}
+                >
+                  <div className='flex items-center'>
+                    {isLoading && <LoaderCircleIcon className="animate-spin size-4 text-white" />}
+                    {isLoading ? 'Saving...' : 'Save Changes'}
+                  </div>
                 </button>
               </div>
             </div>

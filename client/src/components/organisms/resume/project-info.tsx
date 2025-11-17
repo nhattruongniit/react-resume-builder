@@ -13,7 +13,6 @@ function ProjectInfo({ data, onChange }: ProjectInfoProps) {
       name: "",
       type: "",
       description: "",
-      _id: Math.random().toString(36).substr(2, 9)
     }
     onChange([...data, newProject]);
   }

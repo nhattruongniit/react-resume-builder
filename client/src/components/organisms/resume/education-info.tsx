@@ -15,7 +15,6 @@ function EducationInfo({ data, onChange }: EducationInfoProps) {
       field: "",
       graduation_date: "",
       gpa: "",
-      _id: Math.random().toString(36).substr(2, 9)
     }
     onChange([...data, newEducation]);
   }

@@ -5,7 +5,7 @@ export interface IExperience {
   end_date: string,
   description: string,
   is_current: boolean,
-  _id: string
+  _id?: string
 }
 
 export interface IEducation {
@@ -14,14 +14,14 @@ export interface IEducation {
   field: string,
   graduation_date: string,
   gpa: string,
-  _id: string
+  _id?: string
 }
 
 export interface IProject {
   name: string,
   type: string,
   description: string,
-  _id: string
+  _id?: string
 }
 
 export interface IPersonalInfo {

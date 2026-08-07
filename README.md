@@ -2,6 +2,19 @@
 
 This is a full-stack web application that allows users to create, customize, and download professional resumes. The application is built using modern web technologies and provides an intuitive interface for users to input their information and select from various resume templates.
 
+## Script
+```bash
+# run the frontend localhost:5173
+cd client
+yarn install
+yarn dev
+
+# run the backend localhost:8000
+cd server
+npm install
+npm run serve
+```
+
 ## Technologies Used
 
 ### Frontend

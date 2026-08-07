@@ -9,9 +9,10 @@ import aiRouter from './routes/ai.routes.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-await connectDB();
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+
+await connectDB();
 
 app.get('/', (_, res) => {
   res.send('Resume Builder Server is running');
@@ -21,5 +22,5 @@ app.use('/api/resumes', resumeRouter);
 app.use('/api/ai', aiRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port localhost:${PORT}`);
 });

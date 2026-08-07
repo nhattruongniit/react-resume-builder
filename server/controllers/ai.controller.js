@@ -21,8 +21,9 @@ export const enhanceProfessionalSummary = async (req, res) => {
 
     const enhancedContent = response.choices[0].message.content.trim();
     res.status(200).json({ enhancedContent });
-  } catch (error) { 
-    res.status(500).json({ message: "Internal server error" });
+  } catch (error) {
+    console.error('enhanceProfessionalSummary error:', JSON.stringify(error, null, 2));
+    res.status(500).json({ message: error?.message, status: error?.status, code: error?.code });
   }
 }
 
@@ -46,8 +47,9 @@ export const enhanceJobDescription = async (req, res) => {
 
     const enhancedContent = response.choices[0].message.content.trim();
     res.status(200).json({ enhancedContent });
-  } catch (error) { 
-    res.status(500).json({ message: "Internal server error" });
+  } catch (error) {
+    console.error('enhanceJobDescription error:', error?.message || error);
+    res.status(500).json({ message: error?.message || "Internal server error" });
   }
 }
 
